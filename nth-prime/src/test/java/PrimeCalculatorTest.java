@@ -18,6 +18,11 @@ public class PrimeCalculatorTest {
     }
 
     @Test
+    public void testThirdPrime() {
+        assertThat(primeCalculator.nth(3)).isEqualTo(5);
+    }
+
+    @Test
     public void testSixthPrime() {
         assertThat(primeCalculator.nth(6)).isEqualTo(13);
     }
