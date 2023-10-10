@@ -39,7 +39,6 @@ public class SimpleLinkedListTest {
         assertThat(list.size()).isEqualTo(0);
     }
 
-    @Ignore("Remove to run test")
     @Test
     public void reverseReversesList() {
         SimpleLinkedList<String> list = new SimpleLinkedList<String>();
@@ -68,7 +67,6 @@ public class SimpleLinkedListTest {
         assertThat(list.asArray(Character.class)).isEqualTo(expected);
     }
 
-    @Ignore("Remove to run test")
     @Test
     public void canReturnEmptyListAsEmptyArray() {
         SimpleLinkedList<Object> list = new SimpleLinkedList<Object>();

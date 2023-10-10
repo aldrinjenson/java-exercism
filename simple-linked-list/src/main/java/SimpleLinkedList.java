@@ -1,3 +1,4 @@
+import java.lang.reflect.Array;
 import java.util.LinkedList;
 import java.util.NoSuchElementException;
 
@@ -27,13 +28,23 @@ class SimpleLinkedList<T> {
     }
 
     void reverse() {
-        // myList.reverse
+        LinkedList<T> reversedList = new LinkedList<T>();
+
+        for (T it : myList) {
+            reversedList.push(it);
+        }
+        this.myList = reversedList;
+
     }
 
     T[] asArray(Class<T> clazz) {
-        T[] arr = myList.toArray(arr 0);
-        return 
-
+        T[] arr = (T[]) Array.newInstance(clazz, myList.size());
+        int i = 0;
+        for (T item : myList) {
+            arr[i] = item;
+            i++;
+        }
+        return arr;
     }
 
     int size() {
