@@ -1,4 +1,3 @@
-import java.io.UncheckedIOException;
 import java.util.Optional;
 
 class ErrorHandling {
@@ -11,11 +10,11 @@ class ErrorHandling {
         throw new IllegalArgumentException(message);
     }
 
-    void handleErrorByThrowingAnyCheckedException() {
+    void handleErrorByThrowingAnyCheckedException() throws CustomCheckedException {
         throw new CustomCheckedException();
     }
 
-    void handleErrorByThrowingAnyCheckedExceptionWithDetailMessage(String message) {
+    void handleErrorByThrowingAnyCheckedExceptionWithDetailMessage(String message) throws CustomCheckedException {
         throw new CustomCheckedException(message);
     }
 
@@ -27,17 +26,16 @@ class ErrorHandling {
         throw new CustomUncheckedException(message);
     }
 
-    void handleErrorByThrowingCustomCheckedException() {
+    void handleErrorByThrowingCustomCheckedException() throws CustomCheckedException {
         throw new CustomCheckedException();
     }
 
-    void handleErrorByThrowingCustomCheckedExceptionWithDetailMessage(String message) {
+    void handleErrorByThrowingCustomCheckedExceptionWithDetailMessage(String message) throws CustomCheckedException {
         throw new CustomCheckedException(message);
     }
 
     void handleErrorByThrowingCustomUncheckedException() {
         throw new CustomUncheckedException();
-
     }
 
     void handleErrorByThrowingCustomUncheckedExceptionWithDetailMessage(String message) {
@@ -45,21 +43,11 @@ class ErrorHandling {
     }
 
     Optional<Integer> handleErrorByReturningOptionalInstance(String integer) {
-
-        throw new CustomUncheckedException(integer);
         try {
-
-            int intValue = Integer.parseInt(integer);
-
-            return Optional.of(intValue);
-
+            return Optional.of(Integer.parseInt(integer));
         } catch (NumberFormatException e) {
-
             return Optional.empty();
-
         }
-
-        // throw new Optiona
     }
 
 }

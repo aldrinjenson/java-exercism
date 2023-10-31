@@ -1,47 +1,73 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
-class PythagoreanTriplet {
+public class PythagoreanTriplet {
 
-    int a, b, c;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+        PythagoreanTriplet that = (PythagoreanTriplet) o;
+        return a == that.a && b == that.b && c == that.c;
+    }
 
-    PythagoreanTriplet(int a, int b, int c) {
+    @Override
+    public int hashCode() {
+        return Objects.hash(a, b, c);
+    }
+
+    private List<Triple> triple;
+    private int a, b, c;
+
+    public PythagoreanTriplet(int a, int b, int c) {
         this.a = a;
         this.b = b;
         this.c = c;
     }
 
-    static TripletListBuilder makeTripletsList() {
-        return new TripletListBuilder();
+    private PythagoreanTriplet(List<Triple> triple) {
+        this.triple = triple;
     }
 
-    static class TripletListBuilder {
-        int targetSum;
-        int maxFactor;
-
-        TripletListBuilder thatSumTo(int sum) {
-            targetSum = sum;
-            return this;
-        }
-
-        TripletListBuilder withFactorsLessThanOrEqualTo(int maxFactor) {
-            this.maxFactor = maxFactor;
-            return this;
-        }
-
-        List<PythagoreanTriplet> build() {
-            List<PythagoreanTriplet> triplets = new ArrayList<>();
-
-            for (int a = 1; a <= maxFactor; a++) {
-                for (int b = a + 1; b <= maxFactor; b++) {
-                    int c = targetSum - a - b;
-                    if (c > b && a * a + b * b == c * c) {
-                        triplets.add(new PythagoreanTriplet(a, b, c));
-                    }
+    public static PythagoreanTriplet makeTripletsList() {
+        List<Triple> triple = new ArrayList<>();
+        for (int a = 1; a <= 15000; a++) {
+            for (int b = a; b <= 15000; b++) {
+                int cSquared = a * a + b * b;
+                int c = (int) Math.sqrt(cSquared);
+                if (c * c == cSquared) {
+                    triple.add(new Triple(a, b, c));
                 }
             }
-
-            return triplets;
         }
+        return new PythagoreanTriplet(triple);
+    }
+
+    public PythagoreanTriplet thatSumTo(int number) {
+        triple = triple.stream().filter(t -> t.a + t.b + t.c == number).toList();
+        return this;
+    }
+
+    public List<PythagoreanTriplet> build() {
+        return triple.stream().map(t -> new PythagoreanTriplet(t.a, t.b, t.c)).toList();
+    }
+
+    public PythagoreanTriplet withFactorsLessThanOrEqualTo(int limit) {
+        triple = triple.stream().filter(t -> t.c <= limit).toList();
+        return this;
+    }
+}
+
+class Triple {
+
+    public int a, b, c;
+
+    public Triple(int a, int b, int c) {
+        this.a = a;
+        this.b = b;
+        this.c = c;
     }
 }
